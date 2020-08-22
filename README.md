@@ -1,33 +1,33 @@
-#DB設計
+# DB設計
 
 
 
-##usersテーブル
+## usersテーブル
 |Colum|Type|Options|
 |-----|----|-------|
 |email|string|null: false, default: ""|
 |encrypted_password|string|null, false, default: ""|
 
-###Association
+### Association
 -has_one :cards, dependent: :destroy
 -has_one :addresses, dependent: :destroy
 -has_many: items, foreign_key: user_id
 
 
 
-##cardsテーブル
+## cardsテーブル
 |Colum|Type|Options|
 |-----|----|-------|
 |card_token|string|null: false|
 |customer_token|string|null: false|
 |user|references|foreign_key: true|
 
-###Association
+### Association
 -belongs_to :user, optional: true
 
 
 
-##itemsテーブル
+## itemsテーブル
 |Colum|Type|Options|
 |-----|----|-------|
 |name|string|null: false, index: true|
@@ -42,7 +42,7 @@
 |category|references|null: false, foreign_key: true|
 |user|references|null: false, foreign_key: true|
 
-###Association
+### Association
 -belongs_to :user
 -belongs_to :category
 -has_many :item_images, dependent: :destroy
@@ -50,25 +50,25 @@
 
 
 
-＃＃item_imagesテーブル
+## item_imagesテーブル
 |Colum|Type|Options|
 |-----|----|-------|
 |image|text|null: false|
 |item|references|foreign_key: true|
 
-###Association
+### Association
 -belongs_to :item, optional: true
 
 
 
-##prefecturesテーブル
-###Association
+## prefecturesテーブル
+### Association
 -has_many :items
 -has_one :address
 
 
 
-##addressesテーブル
+## addressesテーブル
 |Colum|Type|Options|
 |-----|----|-------|
 |phone_number|string||
@@ -79,17 +79,17 @@
 |building_name|string|default, ""|
 |user|references|foreign_key: true|
 
-###Association
+### Association
 -belongs_to :user, optional: true
 -belongs_to_active_hash :prefecture
 
 
-##categoriesテーブル
+## categoriesテーブル
 |Colum|Type|Options|
 |-----|----|-------|
 |name|string|null: false|
 |ancesty|string||
 
-###Association
+### Association
 -has_many :items
 -has_ancesty
