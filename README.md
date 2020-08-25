@@ -16,13 +16,13 @@
 
 ### Association
 - has_many: items
-- has_many: items_transactions
+- has_many: item_transactions
 
 
 ## addressesテーブル
 |Colum|Type|Options|
 |-----|----|-------|
-|postal_code|integer|null :false|
+|postal_code|string|null :false|
 |prefecture|integer|null: false|
 |city|string|null: false|
 |address|string|null: false|
@@ -39,11 +39,13 @@
 |Colum|Type|Options|
 |-----|----|-------|
 |name|string|null: false|
-|prise|integer|null: false|
 |info|text|null: false|
-|scheduled_delivery_id(active_hash)|integer|null: false|
-|shipping_fee_status_id(active_hash)|integer|null: false|
 |category_id(active_hash)|integer|null: false|
+|condition_id(active_hash)|integer|null: false|
+|shipping_fee_status_id(active_hash)|integer|null: false|
+|prefecture_id(active_hash)|integer|null: false|
+|scheduled_delivery_id(active_hash)|integer|null: false|
+|price|integer|null: false|
 |user_id|integer|null: false, foreign_key: true|
 
 ### Association
