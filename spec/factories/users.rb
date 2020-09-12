@@ -11,4 +11,4 @@ FactoryBot.define do
     last_name_kana { Gimei.first.katakana }
     birth_date { Faker::Date.in_date_period(year: 2000) }
   end
-end
+end 
