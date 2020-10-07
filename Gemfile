@@ -21,6 +21,12 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 
 gem 'pry-rails'
+
+gem "active_hash"
+
+gem 'mini_magick'
+
+gem 'image_processing', '~> 1.2'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
