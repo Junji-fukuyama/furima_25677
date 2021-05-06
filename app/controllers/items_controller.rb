@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :select_item, only: [:show, :edit, :update, :destroy]
-
+  before_action :move_to_index, only:[ :edit , :update, :destroy]
+  
   def index
-    @items = Item.all.order(created_at: :desc)
+    @items = Item.includes(:user).order("created_at DESC")
   end
 
   def new
@@ -12,12 +13,10 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    # バリデーションで問題があれば、保存はされず「商品出品画面」を再描画
     if @item.valid?
       @item.save
       return redirect_to root_path
     end
-    # アクションのnewをコールすると、エラーメッセージが入った@itemが上書きされてしまうので注意
     render 'new'
   end
 
@@ -25,17 +24,18 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    return redirect_to root_path if current_user.id != @item.user.id
   end
 
   def update
-    @item.update(item_params) if current_user.id == @item.user.id
-    return redirect_to item_path if @item.valid?
-    render 'edit'
+    if @item.update(item_params)
+      redirect_to item_path(@item)
+    else
+      render 'edit'
+    end
   end
 
   def destroy
-    @item.destroy if current_user.id == @item.user.id
+    @item.destroy
     redirect_to root_path
   end
 
@@ -57,6 +57,10 @@ class ItemsController < ApplicationController
 
   def select_item
     @item = Item.find(params[:id])
+  end
+
+  def move_to_index
+    return redirect_to root_path if current_user.id != @item.user.id
   end
 
 end

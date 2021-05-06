@@ -1,22 +1,16 @@
 class PayForm
   include ActiveModel::Model
-  #Active Recordの場合と同様に form_with や render などのヘルパーメソッドが使用できるようになる
 
- attr_accessor :item_id, :token, :postal_code, :prefecture_id, :city, :addresses, :building, :phone_number, :user_id
-  # フォームオブジェクトで使用する値を定義している（読み書きができるようになっている）
-  # 取得する値を宣言している
-
-  # <<バリデーション>>
+ attr_accessor :postal_code, :prefecture_id, :city, :addresses, :building, :phone_number, :user_id, :item_id, :token
   with_options presence: true do
-    validates :item_id
-    validates :token
-    validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/, message: 'Input correctly' }
-    validates :prefecture_id, numericality: { other_than: 0, message: 'Select' }
+    validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/ }
+    validates :prefecture_id, numericality: { other_than: 0 }
     validates :city
     validates :addresses
-    validates :phone_number, length: { maximum: 11, message: 'Too long' }
-    # 電話番号は入力フォームで制限してますが、一応つけています。
+    validates :phone_number, length: { maximum: 11 }, format: { with: /\A[0-9]+\z/ }
     validates :user_id
+    validates :item_id
+    validates :token
   end
 
   def save
@@ -24,6 +18,7 @@ class PayForm
       item_id: item_id,
       user_id: user_id
     )
+
     Address.create(
       order_id: order.id,
       postal_code: postal_code,
@@ -34,5 +29,5 @@ class PayForm
       phone_number: phone_number
     )
   end
-
+  
 end

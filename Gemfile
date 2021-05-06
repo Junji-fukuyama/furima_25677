@@ -29,6 +29,10 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 
 gem "payjp"
+
+# gem "aws-sdk-s3", require: false
+# 「active storage」を「S3」で使う時に必要なgem
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -57,6 +61,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop', require: false
+  gem 'meta_request'
 end
 
 group :test do

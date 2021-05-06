@@ -1,14 +1,13 @@
 FactoryBot.define do
   factory :user do
+    # 「Faker」は、一意性がs流ものに使用するもの
     nickname { Faker::Internet.username }
+    password { '1a' + Faker::Internet.password(min_length: 7, max_length: 20) }
     email { Faker::Internet.email }
-    string = Faker::Alphanumeric.alphanumeric(number: 6, min_alpha: 1, min_numeric: 1)
-    password { string }
-    password_confirmation { password }
-    first_name { Gimei.last.kanji }
-    last_name { Gimei.first.kanji }
-    first_name_kana { Gimei.last.katakana }
-    last_name_kana { Gimei.first.katakana }
-    birth_date { Faker::Date.in_date_period(year: 2000) }
+    birth_date { Faker::Date.between_except(from: 20.year.ago, to: 1.year.from_now, excepted: Date.today) }
+    first_name { '田中' }
+    last_name { '太郎' }
+    first_name_kana { 'タナカ' }
+    last_name_kana { 'タロウ' }
   end
-end 
+end
